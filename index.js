@@ -24,18 +24,18 @@ app.post('/webhook', (req, res) => {
 });
 
 app.get('/webhook', (req, res) => {
-    console.log('POST: webhook',)
+    console.log('GET: webhook',)
 
     const VERIFY_TOKEN = 'TokenUnico';
 
     const mode = req.query['hub.mode'];
     const token = req.query['hub.verify_token'];
-    const cahllenge = req.query['hub.cahllenge']
+    const challenge = req.query['hub.challenge']
 
     if(mode && token){
         if(mode === 'subscribe' && token === VERIFY_TOKEN){
             console.log('WebHook verificado');
-            res.status(200).send(cahllenge);
+            res.status(200).send(challenge);
         }else{
             return res.status(404).send({message : "page not found"});
         }
