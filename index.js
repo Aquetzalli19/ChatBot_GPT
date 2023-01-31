@@ -44,6 +44,9 @@ app.get('/webhook', (req, res) => {
 
 });
 
-app.listen(3000, () =>{
+app.get('/', (req, res) => {
+    res.status(200).send({message : 'Hello to my chatbot'});
+})
+app.listen(8080, () =>{
     console.log('listening on port 3000');
 })
