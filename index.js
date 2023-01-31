@@ -1,5 +1,6 @@
-const express = require('express')
-const bodyParser = require('body-parser');
+import express  from "express"
+import bodyParser  from "body-parser";
+import { PORT }  from "./confing.js"
 
 const app = express().use(bodyParser.json());
 
@@ -47,6 +48,6 @@ app.get('/webhook', (req, res) => {
 app.get('/', (req, res) => {
     res.status(200).send({message : 'Hello to my chatbot'});
 })
-app.listen(8080, () =>{
-    console.log('listening on port 3000');
+app.listen(PORT, () =>{
+    console.log('listening on port ', PORT);
 })
