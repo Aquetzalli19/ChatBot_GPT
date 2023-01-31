@@ -24,7 +24,7 @@ app.post('/webhook', (req, res) => {
 });
 
 app.get('/webhook', (req, res) => {
-    console.log('POST: webhook',)
+    console.log('GET: webhook',)
 
     const VERIFY_TOKEN = 'TokenUnico';
 
