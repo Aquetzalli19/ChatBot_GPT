@@ -2,6 +2,8 @@ import express  from "express"
 import bodyParser  from "body-parser";
 import { PORT }  from "./confing.js"
 import request from "request";
+const API_KEY = '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';
+const MODEL_ENGINE = 'text-davinci-003';
 
 const app = express().use(bodyParser.json());
  
@@ -67,9 +69,36 @@ app.get('/', (req, res) => {
 function handleMessage(sender_psid, received_message){
     let response;
 
+    
+async function generateText(prompt) {
+  try {
+    const response = await fetch(`https://api.openai.com/v1/engines/${MODEL_ENGINE}/completions`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_KEY}`
+      },
+      body: JSON.stringify({
+        prompt: prompt,
+        max_tokens: 1024,
+        n: 1,
+        stop: null,
+        temperature: 0.5
+      })
+    });
+    const data = await response.json();
+    return data.choices[0].text;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Usage
+const prompt = received_message;
+
     if(received_message.text){
         response = {
-            "text": `Tu mensaje fue: ${received_message.text}:)`
+            "text": generateText(prompt).then(output => output)
         };
     }
 
@@ -106,3 +135,5 @@ function callSendApi(sender_psid, response){
 app.listen(PORT, () =>{
     console.log('listening on port ', PORT);
 })
+
+
