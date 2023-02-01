@@ -4,7 +4,7 @@ import { PORT }  from "./confing.js"
 import request from "request";
 import fetch from "node-fetch";
 
-const API_KEY = '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';
+const API_KEY = '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';
 const MODEL_ENGINE = 'text-davinci-003';
 
 const app = express().use(bodyParser.json());
