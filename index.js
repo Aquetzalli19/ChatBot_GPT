@@ -4,7 +4,7 @@ import { PORT }  from "./confing.js"
 import request from "request";
 import fetch from "node-fetch";
 
-const API_KEY = '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';
+const API_KEY = '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';
 const MODEL_ENGINE = 'text-davinci-003';
 
 const app = express().use(bodyParser.json());
@@ -89,7 +89,8 @@ async function generateText(prompt) {
       })
     });
     const data = await response.json();
-    console.log(data);
+    console.log(data)
+    return data.choices[0].text;
   } catch (error) {
     console.error(error);
   }
