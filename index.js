@@ -3,14 +3,14 @@ import bodyParser  from "body-parser";
 import { PORT }  from "./confing.js"
 
 const app = express().use(bodyParser.json());
-
+ 
 app.post('/webhook', (req, res) => {
     console.log('POST: webhook',)
 
     const body = req.body;
     if(body.object === 'page'){
 
-        body.entry.forEcah( entry => {
+        body.entry.forEach( entry => {
             //Se reciben y procesan los mensajes
             const webhookEvent = entry.messaging[0];
             console.log(webhookEvent);
