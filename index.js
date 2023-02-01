@@ -2,6 +2,8 @@ import express  from "express"
 import bodyParser  from "body-parser";
 import { PORT }  from "./confing.js"
 import request from "request";
+import fetch from "node-fetch";
+
 const API_KEY = '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';
 const MODEL_ENGINE = 'text-davinci-003';
 
