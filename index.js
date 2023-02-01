@@ -89,7 +89,7 @@ async function generateText(prompt) {
       })
     });
     const data = await response.json();
-    return data.choices[0].text;
+    console.log(data);
   } catch (error) {
     console.error(error);
   }
