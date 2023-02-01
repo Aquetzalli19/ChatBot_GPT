@@ -1,16 +1,27 @@
+//VAriables messenger
 import express  from "express"
 import bodyParser  from "body-parser";
 import { PORT }  from "./confing.js"
 import request from "request";
-import fetch from "node-fetch";
 
+
+//llaves de chat GPT
+import fetch from "node-fetch";
 const API_KEY = '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';
 const MODEL_ENGINE = 'text-davinci-003';
 
+//Variables servidor
 const app = express().use(bodyParser.json());
  
+//variable token de messenger
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
+app.get('/', (req, res) => {
+    res.status(200).send({message : 'Hello to my chatbot'});
+})
+
+
+//Configuracion Webhook
 app.post('/webhook', (req, res) => {
     console.log('POST: webhook',)
 
@@ -63,45 +74,14 @@ app.get('/webhook', (req, res) => {
 
 });
 
-app.get('/', (req, res) => {
-    res.status(200).send({message : 'Hello to my chatbot'});
-})
-
 //Handle messages events
 function handleMessage(sender_psid, received_message){
     let response;
 
-    
-async function generateText(prompt) {
-  try {
-    const response = await fetch(`https://api.openai.com/v1/engines/${MODEL_ENGINE}/completions`, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_KEY}`
-      },
-      body: JSON.stringify({
-        prompt: prompt,
-        max_tokens: 1024,
-        n: 1,
-        stop: null,
-        temperature: 0.5
-      })
-    });
-    const data = await response.json();
-    console.log(data)
-    return data.choices[0].text;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Usage
-const prompt = received_message.text;
 
     if(received_message.text){
         response = {
-            "text": generateText(prompt).then(output => output)
+            "text": `Tu mensaje es : ${received_message.text}`
         };
     }
 
