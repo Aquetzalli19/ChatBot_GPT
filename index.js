@@ -70,7 +70,7 @@ function handleMessage(sender_psid, received_message){
     if(received_message.text){
         response = {
             "text": `Tu mensaje fue: ${received_message.text}:)`
-        }
+        };
     }
 
     callSendApi(sender_psid, response);
@@ -90,7 +90,7 @@ function callSendApi(sender_psid, response){
     };
 
     request({
-        "uri": "https://graph.facebook.com/v2.6/me/messages",
+        "uri": "https://graph.facebook.com/v2.6/400779950117178/messages",
         "qs": {"access_token": PAGE_ACCESS_TOKEN},
         "method": "POST",
         "json": requestBody
