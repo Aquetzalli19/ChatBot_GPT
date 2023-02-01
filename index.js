@@ -96,7 +96,7 @@ async function generateText(prompt) {
 }
 
 // Usage
-const prompt = received_message;
+const prompt = received_message.text;
 
     if(received_message.text){
         response = {
