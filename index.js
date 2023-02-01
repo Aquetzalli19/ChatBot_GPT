@@ -99,7 +99,6 @@ function handleMessage(sender_psid, received_message){
           console.error(error);
         }
       }
-      
       // Usage
       const prompt = received_message.text;
 
