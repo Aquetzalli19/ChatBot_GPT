@@ -105,14 +105,15 @@ function handleMessage(sender_psid, received_message){
         const prompt = received_message.text;
         
     if(received_message.text){
+        let gptResponse =  generateText(prompt).then(output => output); 
         response = {
-            "text": generateText(prompt).then(output => output)
+            "text": gptResponse
         };
     }
 
     setTimeout(()=>{
         callSendApi(sender_psid, response);
-        console.log(response.Promise);
+        console.log(response);
     }, 2000)
     
 }
