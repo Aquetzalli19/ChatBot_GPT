@@ -110,10 +110,12 @@ function handleMessage(sender_psid, received_message){
         };
     }
 
+    setTimeout(()=>{
+        callSendApi(sender_psid, response);
+        console.log(response);
+    }, 10000)
+    
 }
-
-console.log(response);
-callSendApi(sender_psid, response);
 
 //Handle messaging_postbkacks events
 function handlePostback(sender_psid, recived_postback){
