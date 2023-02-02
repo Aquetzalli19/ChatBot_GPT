@@ -7,7 +7,7 @@ import axios from 'axios';
 
 
 //llaves de chat GPT
-const API_KEY = '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';
+const API_KEY = process.env.API_KEY;
 const MODEL_ENGINE = 'text-davinci-003';
 
 //Variables servidor
