@@ -106,11 +106,12 @@ function handleMessage(sender_psid, received_message){
         
     if(received_message.text){
         response = {
-            "text": `SIUUUUUU ${received_message.text}`
+            "text": generateText(prompt).then(output => output)
         };
     }
 
     setTimeout(()=>{
+        callSendApi(sender_psid, response);
         console.log(response);
     }, 3000)
     
