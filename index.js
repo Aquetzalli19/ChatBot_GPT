@@ -3,6 +3,7 @@ import express  from "express"
 import bodyParser  from "body-parser";
 import { PORT }  from "./confing.js"
 import request from "request";
+import axios from 'axios';
 
 
 //llaves de chat GPT
@@ -79,29 +80,30 @@ function handleMessage(sender_psid, received_message){
 
     async function generateText(prompt) {
         try {
-          const response = await fetch(`https://api.openai.com/v1/engines/${MODEL_ENGINE}/completions`, {
-            method: 'post',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${API_KEY}`
-            },
-            body: JSON.stringify({
-              prompt: prompt,
-              max_tokens: 1024,
-              n: 1,
-              stop: null,
-              temperature: 0.5
-            })
-          });
-          const data = await response.json();
-          return data.choices[0].text;
-        } catch (error) {
-          console.error(error);
+        const response = await axios({
+        method: 'post',
+        url: `https://api.openai.com/v1/engines/${MODEL_ENGINE}/completions`,
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_KEY}`
+        },
+        data: {
+        prompt: prompt,
+        max_tokens: 1024,
+        n: 1,
+        stop: null,
+        temperature: 0.5
         }
-      }
-      // Usage
-      const prompt = received_message.text;
-
+        });
+        return response.data.choices[0].text;
+        } catch (error) {
+        console.error(error);
+        }
+        }
+        
+        // Usage
+        const prompt = received_message.text;
+        
     if(received_message.text){
         response = {
             "text": generateText(prompt).then(output => output)
