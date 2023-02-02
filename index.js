@@ -1,10 +1,9 @@
-//VAriables messenger
+//Variables messenger
 import express  from "express"
 import bodyParser  from "body-parser";
 import { PORT }  from "./confing.js"
 import request from "request";
 import axios from 'axios';
-
 
 //llaves de chat GPT
 const API_KEY = process.env.API_KEY;
@@ -51,7 +50,6 @@ app.post('/webhook', (req, res) => {
         return res.status(404).send({message : "page not found"});
     }
 });
-
 app.get('/webhook', (req, res) => {
     console.log('GET: webhook',)
 
@@ -82,70 +80,34 @@ function handleMessage(sender_psid, received_message){
         try {
         const response = await axios({
         method: 'post',
-        url: `https://api.openai.com/v1/engines/${MODEL_ENGINE}/completions`,
-        headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_KEY}`
-        },
-        data: {
-        prompt: prompt,
-        max_tokens: 1024,
-        n: 1,
-        stop: null,
-        temperature: 0.5
-        }
+        url: `https://api.openai.com/v1/engines/${MODEL_ENG}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${API_KEY}`
+            },
+            data: {
+                prompt: prompt,
+                max_tokens: 2048,
+                n: 1,
+                stop: ['User:'],
+                temperature: 0.5
+            }
         });
+    
         return response.data.choices[0].text;
         } catch (error) {
         console.error(error);
+        return 'Error generating text.';
         }
-        }
-        
-        // Usage
-        const prompt = received_message.text;
-        
-    if(received_message.text){
-        response = {
-            "text": generateText(prompt).then(output => output)
-        };
     }
-
-    setTimeout(()=>{
-        callSendApi(sender_psid, response);
-        console.log(response);
-    }, 3000)
     
-}
-
-//Handle messaging_postbkacks events
-function handlePostback(sender_psid, recived_postback){
-
-}
-
-function callSendApi(sender_psid, response){
-    const requestBody = {
-        "recipient": {
-            "id": sender_psid   
-        },
-        "message": response
-    };
-
-    request({
-        "uri": "https://graph.facebook.com/v2.6/me/messages",
-        "qs": {"access_token": PAGE_ACCESS_TOKEN},
-        "method": "POST",
-        "json": requestBody
-    }, (err, res, body)=>{
-        if(!err){
-            console.log("Mensaje enviado de vuelo");
-        }else{
-            console.error("Imposible enviar mensaje :(")
+    if (received_message.text) {
+        response = {
+        "text": `You said: "${received_message.text}"`
         }
-    });
+    }
+    
+    callSendAPI(sender_psid, response);
 }
-
-app.listen(PORT, () =>{
-    console.log('listening on port ', PORT);
-})
 
 
