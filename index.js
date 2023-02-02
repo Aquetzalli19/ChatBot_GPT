@@ -111,9 +111,9 @@ function handleMessage(sender_psid, received_message){
     }
 
     setTimeout(()=>{
-        callSendApi(sender_psid, response);
         console.log(response);
-    }, 10000)
+        callSendApi(sender_psid, response);
+    }, 2000)
     
 }
 
